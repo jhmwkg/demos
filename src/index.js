@@ -13,6 +13,7 @@ import {
 } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import FocusTracker from './components/FocusTracker';
+import GroceryList from './components/GroceryList';
 
 function Header() {
   const location = useLocation();
@@ -40,6 +41,15 @@ function Header() {
         >
           Focus Tracker
         </button>
+        <button
+          className={
+            'btn btn-secondary' +
+            (location.pathname === '/grocery' ? ' active' : '')
+          }
+          onClick={go('/grocery')}
+        >
+          Grocery List
+        </button>
       </div>
     </header>
   );
@@ -53,6 +63,7 @@ function Root() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/focus-tracker" element={<FocusTracker />} />
+          <Route path="/grocery" element={<GroceryList />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
