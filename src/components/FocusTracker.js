@@ -59,6 +59,8 @@ export default function FocusTracker() {
   // timer effect
   useEffect(() => {
     if (isRunning) {
+      // ensure only one interval is active
+      if (timerRef.current) clearInterval(timerRef.current);
       timerRef.current = setInterval(() => {
         setRemaining(prev => {
           if (prev <= 1) {
@@ -73,7 +75,7 @@ export default function FocusTracker() {
       return () => clearInterval(timerRef.current);
     }
     // when paused or stopped clear interval
-    clearInterval(timerRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
   }, [isRunning]);
 
   const handleDurationChange = e => {
@@ -83,6 +85,8 @@ export default function FocusTracker() {
   };
 
   const handleStart = () => {
+    // clear any stray timer before starting
+    if (timerRef.current) clearInterval(timerRef.current);
     if (!remaining) {
       const secs = Math.round(duration * 60);
       setRemaining(secs);
@@ -106,7 +110,13 @@ export default function FocusTracker() {
       date: new Date().toISOString(),
       durationMinutes: initialDurRef.current,
     };
-    setSessions(prev => [...prev, entry]);
+    setSessions(prev => {
+      // avoid double‑logging identical entry (same id)
+      if (prev.length && prev[prev.length - 1].id === entry.id) {
+        return prev;
+      }
+      return [...prev, entry];
+    });
     setSuccess(true);
     setTimeout(() => setSuccess(false), 2000);
   };
@@ -147,7 +157,7 @@ export default function FocusTracker() {
         </div>
       </div>
 
-      <div className="card mx-auto">
+      <div className="card mx-auto" style={{ boxShadow: 'none' }}>
         <div className="card-body text-center">
           <div className="display-1 timer-display">
             {formatTime(remaining)}
