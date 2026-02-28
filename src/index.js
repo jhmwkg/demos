@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -7,7 +7,6 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
   useLocation,
   useNavigate,
   Navigate,
@@ -19,44 +18,28 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const label = location.pathname === '/focus-tracker' ? 'Focus Tracker' : 'Home';
-
-  const handleSelect = path => {
-    navigate(path);
-  };
+  const go = path => () => navigate(path);
 
   return (
-    <header className="bg-light">
-      <div className="container-fluid py-2 d-flex justify-content-between align-items-center">
-        <span className="navbar-brand mb-0 h1">FocusApp</span>
-        <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {label}
-          </button>
-          <ul className="dropdown-menu">
-            <li>
-              <button
-                className="dropdown-item"
-                onClick={() => handleSelect('/')}
-              >
-                Home
-              </button>
-            </li>
-            <li>
-              <button
-                className="dropdown-item"
-                onClick={() => handleSelect('/focus-tracker')}
-              >
-                Focus Tracker
-              </button>
-            </li>
-          </ul>
-        </div>
+    <header className="bg-light py-2">
+      <div className="container d-flex gap-2">
+        <button
+          className={
+            'btn btn-secondary' + (location.pathname === '/' ? ' active' : '')
+          }
+          onClick={go('/')}
+        >
+          Home
+        </button>
+        <button
+          className={
+            'btn btn-secondary' +
+            (location.pathname === '/focus-tracker' ? ' active' : '')
+          }
+          onClick={go('/focus-tracker')}
+        >
+          Focus Tracker
+        </button>
       </div>
     </header>
   );
