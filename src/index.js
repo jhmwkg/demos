@@ -8,6 +8,7 @@ import {
   Route,
   Link,
   useLocation,
+  Navigate,
 } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import FocusTracker from './components/FocusTracker';
@@ -25,22 +26,25 @@ function Header() {
         <Link className="navbar-brand" to="/">
           FocusApp
         </Link>
-        <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            onClick={toggle}
-            aria-expanded={open}
-          >
-            Navigate
-          </button>
-          <ul className={
-            'dropdown-menu' + (open ? ' show' : '')
-          }>
-            <li>
+        <button
+          className="navbar-toggler"
+          type="button"
+          aria-label="Toggle navigation"
+          onClick={toggle}
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div
+          className={
+            'collapse navbar-collapse' + (open ? ' show' : '')
+          }
+          id="navbarNav"
+        >
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <Link
                 className={
-                  'dropdown-item' + (location.pathname === '/' ? ' active' : '')
+                  'nav-link' + (location.pathname === '/' ? ' active' : '')
                 }
                 to="/"
                 onClick={close}
@@ -48,10 +52,10 @@ function Header() {
                 Home
               </Link>
             </li>
-            <li>
+            <li className="nav-item">
               <Link
                 className={
-                  'dropdown-item' + (location.pathname === '/tracker' ? ' active' : '')
+                  'nav-link' + (location.pathname === '/tracker' ? ' active' : '')
                 }
                 to="/tracker"
                 onClick={close}
@@ -74,6 +78,7 @@ function Root() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/tracker" element={<FocusTracker />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </BrowserRouter>
