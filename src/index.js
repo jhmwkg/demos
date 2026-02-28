@@ -9,65 +9,56 @@ import {
   Route,
   Link,
   useLocation,
+  useNavigate,
   Navigate,
 } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import FocusTracker from './components/FocusTracker';
 
 function Header() {
-  const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const toggle = () => setOpen(o => !o);
-  const close = () => setOpen(false);
+  const label = location.pathname === '/focus-tracker' ? 'Focus Tracker' : 'Home';
+
+  const handleSelect = path => {
+    navigate(path);
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          FocusApp
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          aria-label="Toggle navigation"
-          onClick={toggle}
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        <div
-          className={
-            'collapse navbar-collapse' + (open ? ' show' : '')
-          }
-          id="navbarNav"
-        >
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link
-                className={
-                  'nav-link' + (location.pathname === '/' ? ' active' : '')
-                }
-                to="/"
-                onClick={close}
+    <header className="bg-light">
+      <div className="container-fluid py-2 d-flex justify-content-between align-items-center">
+        <span className="navbar-brand mb-0 h1">FocusApp</span>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {label}
+          </button>
+          <ul className="dropdown-menu">
+            <li>
+              <button
+                className="dropdown-item"
+                onClick={() => handleSelect('/')}
               >
                 Home
-              </Link>
+              </button>
             </li>
-            <li className="nav-item">
-              <Link
-                className={
-                  'nav-link' + (location.pathname === '/tracker' ? ' active' : '')
-                }
-                to="/tracker"
-                onClick={close}
+            <li>
+              <button
+                className="dropdown-item"
+                onClick={() => handleSelect('/focus-tracker')}
               >
-                Tracker
-              </Link>
+                Focus Tracker
+              </button>
             </li>
           </ul>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }
 
@@ -78,7 +69,7 @@ function Root() {
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/tracker" element={<FocusTracker />} />
+          <Route path="/focus-tracker" element={<FocusTracker />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

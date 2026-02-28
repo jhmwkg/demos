@@ -6,7 +6,7 @@ export default function HomePage() {
     <div className="text-center py-4">
       <h1>Home Page</h1>
       <p>Welcome to the focus tracker demo.</p>
-      <Link to="/tracker" className="btn btn-primary">
+      <Link to="/focus-tracker" className="btn btn-primary">
         Go to Tracker
       </Link>
     </div>
