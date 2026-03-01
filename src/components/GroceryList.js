@@ -137,7 +137,7 @@ export default function GroceryList() {
         </div>
         <div className="col-md-8">
           {CATEGORY_OPTIONS.map(cat => {
-            const list = grouped[cat] || [];
+            let list = grouped[cat] || [];
             if (hideCompleted) list = list.filter(i => !i.completed);
             return (
               <div key={cat} className="mb-3">
