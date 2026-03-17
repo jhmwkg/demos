@@ -14,7 +14,7 @@ import { render as renderHome } from './pages/home.js';
 import { render as renderTipCalculator } from './pages/tip-calculator.js';
 import { render as renderShoppingList } from './pages/shopping-list.js';
 import { render as renderUnitConverter } from './pages/unit-converter.js';
-import { render as renderCountdowns } from './pages/countdowns.js';
+import { render as renderChrono } from './pages/chrono.js';
 import { render as renderQuickNotes } from './pages/quick-notes.js';
 import { render as renderRandomPicker } from './pages/random-picker.js';
 import { render as renderAbout } from './pages/about.js';
@@ -64,11 +64,11 @@ const pages = [
     render: renderUnitConverter,
   },
   {
-    id: 'countdowns',
-    label: 'Countdowns',
-    description: 'Keep track of upcoming events with live timers.',
-    icon: 'bi-clock-history',
-    render: renderCountdowns,
+    id: 'chrono',
+    label: 'Chrono',
+    description: 'Real-time clock visualizations and a precise stopwatch.',
+    icon: 'bi-stopwatch',
+    render: renderChrono,
   },
   {
     id: 'quick-notes',
