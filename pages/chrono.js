@@ -202,6 +202,22 @@ function buildTimeRadial(container) {
 }
 
 function buildCalendarRadial(container) {
+  // Create wrapper for both radials
+  const wrapper = document.createElement('div');
+  wrapper.className = 'd-flex flex-column align-items-center gap-3';
+
+  // Build day radial
+  const daySvg = buildDayRadial();
+  wrapper.appendChild(daySvg);
+
+  // Build month radial
+  const monthSvg = buildMonthRadial();
+  wrapper.appendChild(monthSvg);
+
+  container.appendChild(wrapper);
+}
+
+function buildDayRadial() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 200 200');
   svg.setAttribute('width', '200');
@@ -228,7 +244,37 @@ function buildCalendarRadial(container) {
       January 2026
     </text>`;
 
-  container.appendChild(svg);
+  return svg;
+}
+
+function buildMonthRadial() {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 150 150');
+  svg.setAttribute('width', '150');
+  svg.setAttribute('height', '150');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'Current month shown as year progress');
+
+  svg.innerHTML = `
+    <!-- Background -->
+    <circle cx="75" cy="75" r="60" fill="none" stroke="#E2E8F0" stroke-width="16"/>
+
+    <!-- Progress -->
+    <circle id="month-progress" cx="75" cy="75" r="60" fill="none" stroke="#2563EB" stroke-width="16"
+            stroke-dasharray="376.99" stroke-dashoffset="376.99"
+            transform="rotate(-90 75 75)" stroke-linecap="round"/>
+
+    <!-- Month number -->
+    <text id="month-number" x="75" y="78" text-anchor="middle" font-size="32" font-weight="bold" fill="#0F172A">
+      1
+    </text>
+
+    <!-- "of 12" label -->
+    <text x="75" y="98" text-anchor="middle" font-size="12" fill="#64748B">
+      of 12
+    </text>`;
+
+  return svg;
 }
 
 function buildMoonPhase(container) {
@@ -283,7 +329,7 @@ function animateNow(timeContainer, calendarContainer) {
       timeText.textContent = timeStr;
     }
 
-    // Update calendar radial
+    // Update day radial
     const { day, month, year, progress } = getCalendarProgress();
     const calendarCircle = calendarContainer.querySelector('#calendar-progress');
     const dayText = calendarContainer.querySelector('#day-text');
@@ -293,6 +339,16 @@ function animateNow(timeContainer, calendarContainer) {
       calendarCircle.setAttribute('stroke-dashoffset', 502.65 * (1 - progress));
       dayText.textContent = day;
       monthText.textContent = `${month} ${year}`;
+    }
+
+    // Update month radial
+    const { month: monthNum, progress: monthProgress } = getYearProgress();
+    const monthCircle = calendarContainer.querySelector('#month-progress');
+    const monthNumber = calendarContainer.querySelector('#month-number');
+
+    if (monthCircle && monthNumber) {
+      monthCircle.setAttribute('stroke-dashoffset', 376.99 * (1 - monthProgress));
+      monthNumber.textContent = monthNum;
     }
 
     nowAnimationId = requestAnimationFrame(update);
@@ -325,6 +381,16 @@ function getCalendarProgress() {
     month: now.toLocaleString('default', { month: 'long' }),
     year: now.getFullYear(),
     progress: day / daysInMonth
+  };
+}
+
+function getYearProgress() {
+  const now = new Date();
+  const month = now.getMonth() + 1; // 1-12
+
+  return {
+    month,
+    progress: month / 12
   };
 }
 
