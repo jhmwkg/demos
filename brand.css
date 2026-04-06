@@ -398,7 +398,10 @@ a:hover {
 }
 
 .nav-link:hover,
-.nav-link.active { color: var(--color-accent); }
+.nav-link.active { 
+  color: var(--color-accent); 
+  text-decoration: none;
+}
 
 /* Active page highlight in dropdown */
 .dropdown-item.active,
@@ -462,8 +465,9 @@ ul li::before {
   font-weight:  var(--weight-regular);
 }
 
-/* don't show dashes in navbars or dropdown menus */
+/* don't show dashes in navbars, navigation lists, or dropdown menus */
 .navbar-nav li::before,
+.nav li::before,
 .dropdown-menu li::before {
   content: none;
 }

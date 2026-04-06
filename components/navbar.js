@@ -14,47 +14,37 @@ export function renderNavbar(pages, currentId) {
   const root = document.getElementById('navbar-root');
   if (!root) return;
 
+  const homePage = pages.find((p) => p.id === 'home');
+  const aboutPage = pages.find((p) => p.id === 'about');
+
   root.innerHTML = `
-    <nav class="navbar navbar-expand-md border-bottom shadow-sm fixed-top bg-white" style="z-index:1030;">
-      <div class="container">
+    <nav class="navbar border-bottom shadow-sm fixed-top bg-white px-3" style="z-index:1030;">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
 
         <!-- Brand -->
-        <a class="navbar-brand" href="#home">
-          <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>
-          <span>Joseph King Demo Hub</span>
+        <a class="navbar-brand py-0 me-0" href="#home">
+          <i class="bi bi-grid-3x3-gap-fill text-primary"></i>
+          <span class="d-none d-sm-inline ms-1 fw-semibold">Joseph King Demo Hub</span>
         </a>
 
-        <!-- Mobile toggle -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#mainNav"
-          aria-controls="mainNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <!-- Nav links (always visible) -->
+        <ul class="nav nav-pills align-items-center gap-1">
 
-        <!-- Nav links -->
-        <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav ms-auto align-items-md-center gap-md-1">
+          <li class="nav-item">
+            <a class="nav-link px-2 ${currentId === 'home' ? 'nav-active fw-bold' : ''}" href="#home" title="Home">
+              <i class="bi ${homePage?.icon || 'bi-house'}"></i>
+              <span class="d-none d-md-inline ms-1">Home</span>
+            </a>
+          </li>
 
-            <li class="nav-item">
-              <a class="nav-link ${currentId === 'home' ? 'nav-active fw-bold' : ''}" href="#home">
-                Home
-              </a>
-            </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 ${currentId === 'about' ? 'nav-active fw-bold' : ''}" href="#about" title="About">
+              <i class="bi ${aboutPage?.icon || 'bi-info-circle'}"></i>
+              <span class="d-none d-md-inline ms-1">About</span>
+            </a>
+          </li>
 
-            <li class="nav-item">
-              <a class="nav-link ${currentId === 'about' ? 'nav-active fw-bold' : ''}" href="#about">
-                About
-              </a>
-            </li>
-
-          </ul>
-        </div>
+        </ul>
 
       </div>
     </nav>`;
