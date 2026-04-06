@@ -41,14 +41,11 @@ export function render(container, pages) {
                     <div class="me-3 fs-4 text-primary">
                       <i class="bi ${icon ?? 'bi-box'}"></i>
                     </div>
-                    <div class="flex-grow-1">
+                    <div class="flex-grow-1 pe-5">
                       <h6 class="mb-0 fw-semibold">
                         ${escapeText(label)}
                       </h6>
                       <small class="text-body-secondary">${escapeText(description ?? '')}</small>
-                    </div>
-                    <div class="ms-3 text-primary text-decoration-none small fw-medium" style="padding-right: 40px;">
-                      Open <i class="bi bi-arrow-right"></i>
                     </div>
                   </div>
                 </a>
@@ -90,12 +87,6 @@ export function render(container, pages) {
                   ${!isSmall ? `<h5 class="card-title fw-semibold ${isMedium ? 'fs-6' : ''} mb-0">${escapeText(label)}</h5>` : ''}
                   ${(!isSmall && !isMedium) ? `<p class="card-text text-body-secondary small mt-2 mb-0">${escapeText(description ?? '')}</p>` : ''}
                 </div>
-                ${!isSmall ? `
-                <div class="card-footer bg-transparent border-0 pb-3 px-4 mt-auto">
-                  <span class="small text-primary fw-medium">
-                    Open <i class="bi bi-arrow-right"></i>
-                  </span>
-                </div>` : ''}
               </a>
             </div>
           </div>`;
