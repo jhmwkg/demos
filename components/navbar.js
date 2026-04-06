@@ -14,23 +14,6 @@ export function renderNavbar(pages, currentId) {
   const root = document.getElementById('navbar-root');
   if (!root) return;
 
-  // Build dropdown items from pages config
-  const dropdownItems = pages
-    .map(({ id, label }) => {
-      const isActive = id === currentId;
-      return `
-        <li>
-          <a
-            class="dropdown-item ${isActive ? 'active' : ''}"
-            href="#${id}"
-            data-page="${id}"
-          >
-            ${escapeText(label)}
-          </a>
-        </li>`;
-    })
-    .join('');
-
   root.innerHTML = `
     <nav class="navbar navbar-expand-md border-bottom shadow-sm fixed-top bg-white" style="z-index:1030;">
       <div class="container">
@@ -59,25 +42,15 @@ export function renderNavbar(pages, currentId) {
           <ul class="navbar-nav ms-auto align-items-md-center gap-md-1">
 
             <li class="nav-item">
-              <a class="nav-link ${currentId === 'home' ? 'nav-active' : ''}" href="#home">
+              <a class="nav-link ${currentId === 'home' ? 'nav-active fw-bold' : ''}" href="#home">
                 Home
               </a>
             </li>
 
-            <!-- Projects dropdown -->
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="bi bi-collection me-1"></i>Projects
+            <li class="nav-item">
+              <a class="nav-link ${currentId === 'about' ? 'nav-active fw-bold' : ''}" href="#about">
+                About
               </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                ${dropdownItems}
-              </ul>
             </li>
 
           </ul>

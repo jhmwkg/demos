@@ -108,7 +108,7 @@ function navigate() {
   const page = pages.find((p) => p.id === id) ?? pages[0];
 
   // Rebuild navbar with active state
-  renderNavbar(pages.filter((p) => p.id !== 'home'), id);
+  renderNavbar(pages, id);
 
   // Clear and render page — class triggers brand.css page-enter animation
   app.innerHTML = '';
