@@ -17,6 +17,7 @@ import { render as renderUnitConverter } from './pages/unit-converter.js';
 import { render as renderChrono } from './pages/chrono.js';
 import { render as renderQuickNotes } from './pages/quick-notes.js';
 import { render as renderRandomPicker } from './pages/random-picker.js';
+import { render as renderMagicEightBall } from './pages/magic-eight-ball.js';
 import { render as renderAbout } from './pages/about.js';
 import { renderFooter } from './components/footer.js';
 
@@ -83,6 +84,13 @@ const pages = [
     description: "Can't decide? Let fate choose an option for you.",
     icon: 'bi-dice-6',
     render: renderRandomPicker,
+  },
+  {
+    id: 'magic-eight-ball',
+    label: 'Magic Eight Ball',
+    description: 'Ask a question and seek the wisdom of the ball.',
+    icon: 'bi-8-circle',
+    render: renderMagicEightBall,
   },
   // ── Add more demos here ──────────────────────────────────────────────────
   // {

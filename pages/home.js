@@ -18,8 +18,10 @@ export function render(container, pages) {
   let showFavoritesOnly = store.get('home-show-favorites-only') || false;
 
   const renderContent = () => {
-    // Filter out 'home' and 'about'
-    let demos = pages.filter((p) => p.id !== 'home' && p.id !== 'about');
+    // Filter out 'home' and 'about' and sort alphabetically by label
+    let demos = pages
+      .filter((p) => p.id !== 'home' && p.id !== 'about')
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     if (showFavoritesOnly) {
       demos = demos.filter((d) => favorites.includes(d.id));
